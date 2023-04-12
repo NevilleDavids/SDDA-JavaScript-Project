@@ -43,10 +43,14 @@ router.post("/verify", async (req, res) =>{
         res.end();
     }
 });
-router.get("/client_home", (req, res) => {   
+router.get("/client_home", async (req, res) => { 
+    //let useremail = req.body.username;  
     if(req.session.authenticated)
     {
-        res.sendFile(path.join(__dirname, "public", "policy_catalog.html"));
+        const [user_id] = await database.query("SELECT user_identifier FROM user_table WHERE user_email = ?", [req.session.useremail]);
+        const policies = await database.query("SELECT * FROM policy_table WHERE user_identifier = ?",[user_id["user_identifier"]]);
+        res.render(path.join(__dirname, "public", "hope"), {policies});
+        console.log(policies);
     }
     else
     {
