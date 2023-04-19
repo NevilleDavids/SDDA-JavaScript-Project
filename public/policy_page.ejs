@@ -39,29 +39,29 @@
 
 <!-- Start of Policy Catalog -->
 
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="catalog.css">
 <div class="container">
+    <br>
+    <% policies.forEach(policy =>{ %>
     <div class="shop-default shop-cards shop-tech">
-        <div class="row"><% policies.forEach(policy => { %>
+        <div class="row">
             <!-- Start of Product -->
             <div class="col-md-6">
                 <div class="block product no-border z-depth-2-top z-depth-2--hover">
                     <div class="block-image">
                         <a href="#">
                             <!-- <img src="https://www.bootdey.com/image/550x350/FFB6C1/000000" class="img-center"> -->
-                            <img src="images/policies/Plant Cover.png" class="img-center">
+                            <img src= "images/policies/<%=policy.policy_name%>.png" class="img-center">
                         </a>
                         <span class="product-ribbon product-ribbon-right product-ribbon--style-1 bg-blue text-uppercase">New</span>
                     </div>
-                    <div class="block-body text-center" id = "plant_insurance">
+                    <div class="block-body text-center">
                         <h3 class="heading heading-5 strong-600 text-capitalize">
                             <a href="#">
-                                <%=policy.policy_name%>
+                            <%=policy.policy_name%>  
                             </a>
                         </h3>
                         <p class="product-description">
-                            <%=policy.policy_decription%>
+                            <%=policy.policy_decription%>  
                         </p>
                         <!-- <div class="product-colors mt-2">
                             <div class="color-switch float-wrapper">
@@ -124,7 +124,7 @@
                                           <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
                                           <!-- <button type="button" class="btn btn-secondary">Save changes</button> -->
                                         </div>
-                                      </div>
+                                      
                                     </div>
                                 </div>
                                 <!-- End of modal -->
@@ -134,13 +134,14 @@
                 </div>
     
             </div>
+            <br>
             <!-- End Of New Product -->
-        </div><%});%>
+        </div>
     </div>
 </div>
+<%});%>
 <!-- End Of Policy Catalog -->
 
-<!-- End Of Policy Catalog -->
 <footer class="page-footer">
     <div class="container">
         <div class="row">
