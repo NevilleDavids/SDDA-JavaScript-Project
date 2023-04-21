@@ -4,7 +4,8 @@ const session = require("express-session"); //Used to persist the state of a use
 const routes = require("./routes");
 const path = require("path");
 const app = express();
-app.set("view engine","ejs")
+
+app.set("view engine","ejs") 
 //associations for sessions
 app.use(express.json())
 app.use(express.urlencoded({ extended: true}));

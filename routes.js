@@ -23,7 +23,7 @@ router.post("/verify", async (req, res) =>{
             {
             req.session.authenticated = true;
             req.session.useremail = useremail;
-            res.redirect("/client_home")
+            res.redirect("/client_home") 
             }
             else 
             {
@@ -42,7 +42,9 @@ router.post("/verify", async (req, res) =>{
         res.send("<h1> Enter credentials </h1> ");
         res.end();
     }
+
 });
+
 router.get("/client_home", async (req, res) => { 
     //let useremail = req.body.username;  
     if(req.session.authenticated)
@@ -99,4 +101,64 @@ router.get("/test", async (req, res) => {
     }
 });
 
+
+
+
+//admin login route
+router.get("/Adminlogin", (req, res) => {
+    res.sendFile(path.join(__dirname, "public", "loginAdmin.html"));
+});
+
+//verify Admin login
+router.post("/verifyAdmin", async (req, res) =>{
+    let admin_email = req.body.admin_email
+    let password = req.body.password;
+    if(admin_email && password) 
+    {
+        const [credentials] = await database.query("SELECT admin_email, admin_password FROM admin_table WHERE admin_email = ?", [admin_email]) 
+        if(credentials)
+        {
+            if(credentials["admin_email"] === admin_email && credentials["admin_password"] === password)
+            {
+            req.session.authenticated = true;
+            req.session.admin_email = admin_email;
+            res.redirect("/adminPortal") 
+            }
+            else 
+            {
+            res.send("<h1>Invalid credentials</h1>");
+            }
+        res.end();
+        console.log(credentials)     
+        }
+        else
+        {
+            res.send("<h1> No Admin found </h1>")
+        }
+    }    
+    else
+    {
+        res.send("<h1> Enter credentials </h1> ");
+        res.end();
+    }
+
+});
+
+//admin portal route
+
+router.get('/adminPortal',async (req, res) =>{
+       
+   var connection  = require('..//SDDA-JavaScript-Project/database');
+    connection.query('SELECT * FROM admin_table ORDER BY admin_identifier desc');
+           if(req.session.authenticated){
+             
+            const admins = await database.query('SELECT * FROM admin_table ORDER BY admin_identifier desc');
+        res.render(path.join(__dirname, "public", "admin_list"), {admins});
+            console.log(admins); 
+           }else{
+            console.log("Admiin not registered!!!");             
+           }
+                               
+            });
+           
 module.exports = router;
